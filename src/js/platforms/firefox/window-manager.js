@@ -67,7 +67,7 @@ var setupIcon = function(window) {
   button.setAttribute("command", "viewListitSidebar");
   button.setAttribute("observes", "viewListitSidebar");
   button.setAttribute("key", "key_viewListitSidebar");
-  button.setAttribute("image", "chrome://listit/content/webapp/img/listit-icon.png");
+  button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
   button.classList.add("listit");
   restorePosition(document, button);
 };
