@@ -68,7 +68,7 @@ var setupIcon = function(window) {
   button.setAttribute("observes", "viewListitSidebar");
   button.setAttribute("key", "key_viewListitSidebar");
   button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
-  button.classList.add("listit");
+  button.setAttribute("class", "listit toolbarbutton-1 chromeclass-toolbar-additional");
   restorePosition(document, button);
 };
 
@@ -112,7 +112,7 @@ var restorePosition = function(document, button) {
     if (idx != -1) { //this is necessary in his, I don't think it is necessary in ours yet... until we implement the default guy...
       for (var q = idx + 1; q <currentset.length; q++) {
         //oh dear lord why the shit is this a for loop oh my god wat wat wat
-        var before = $(currentset[q]);
+        var before = document.getElementById(currentset[q]);
         if (before) {
           toolbar.insertItem(button.id, before);
           return; //why is it returning? should it be breaking? I. what.
