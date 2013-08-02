@@ -213,6 +213,18 @@ ListItWM.teardownBrowser = function(window) {
   });
 };
 
+ListItWM.disable = function(window) {
+  //need to remove the listitButton from the currentset of whichever toolbar it was in 
+  var toolbars = window.document.querySelectorAll("toolbar");
+  for (var womp = 0; womp < toolbars.length; womp++) {
+    var currentset = toolbars[womp].getAttribute("currentset").split(",");
+    var idx = currentset.indexOf("listitButton");
+    if (idx != -1) {
+      currentset.splice(idx, 1);
+      toolbars[womp].setAttribute("currentset", currentset.join(","));
+    }
+  }
+};
 
 ListItWM.setup = function(realListIt) {
   ListIt = realListIt;
@@ -223,7 +235,7 @@ ListItWM.setup = function(realListIt) {
   wm.addListener(windowListener);
 };
 
-ListItWM.teardown = function() {
+ListItWM.teardown = function(reason) {
   wm.removeListener(windowListener);
   eachWindow(function(domWindow) {
     var sidebarBox = domWindow.document.getElementById("sidebar-box");
@@ -231,5 +243,8 @@ ListItWM.teardown = function() {
       domWindow.toggleSidebar();
     }
     ListItWM.teardownBrowser(domWindow);
+    if (reason == 4) {
+      ListItWM.disable(domWindow);
+    }
   });
 };
