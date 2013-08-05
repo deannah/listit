@@ -24,8 +24,6 @@ var wm = Cc["@mozilla.org/appshell/window-mediator;1"]
     ListIt,
     ListItWM = {};
 
-Cu.import("chrome://listit/content/webapp/js/platforms/firefox/icon-manager.js", ListItWM); //probably wrong way to do this. or wrong place.
-
 var eachWindow = function(fn) {
   var windows = wm.getEnumerator("navigator:browser");
   while (windows.hasMoreElements()) {
@@ -63,7 +61,7 @@ var setupMenu = function(window) {
 };
 
 var setupIcon = function(window) {
-  // maybe this is a more reasonable location to import the icon-manager?
+  Cu.import("chrome://listit/content/webapp/js/platforms/firefox/icon-manager.js", ListItWM);
   ListItWM.ListItIM.createButton(window);
 };
 
