@@ -81,7 +81,7 @@ var restorePosition = function(document, button) {
   for (var i = 0; i < toolbars.length; i++) {
     currentset = toolbars[i].getAttribute("currentset").split(",");
     idx = currentset.indexOf(button.id);
-    if (idx !== -1) { //try changing to !== later to see if it still works.
+    if (idx !== -1) {
       toolbar = toolbars[i];
       break;
     }
@@ -104,6 +104,7 @@ var restorePosition = function(document, button) {
       currentset.push(button.id);
     }
     toolbar.setAttribute("currentset", currentset.join(","));
+    toolbar.currentSet = currentset.join(","); //this is ugly, fix if this solves the problem.
     //document.persist(toolbar.id, "currentset"); //welp this isn't helping.
   }
 
@@ -118,7 +119,8 @@ var restorePosition = function(document, button) {
         if (before) {
           toolbar.insertItem(button.id, before);
           toolbar.setAttribute("currentset", toolbar.currentSet);
-          document.persist(toolbar.id, "currentset");
+          //toolbar.currentSet
+          //document.persist(toolbar.id, "currentset");
           return; //why is it returning? should it be breaking? I. what. {returning ends the function. so it does make sense.}
         }
       }
@@ -226,7 +228,9 @@ ListItWM.disable = function(window) {
     if (idx !== -1) {
       currentset.splice(idx, 1);
       toolbars[i].setAttribute("currentset", currentset.join(","));
+      toolbars[i].currentSet = currentset.join(",");
     }
+    window.persist(toolbars[i], "currentset");
   }
 };
 
