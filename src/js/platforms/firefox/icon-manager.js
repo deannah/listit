@@ -35,6 +35,7 @@ var restorePosition = function(document, button) {
   }
 
   //if the save position wasn't found, use the default one:
+  // this code REALLY REALLY REALLY needs to get overhauled because it is a mess.
   //this why putting icon in palette doesn't work and why bmreplace guy did "if it exists" and set the default on enabling it.
   var defaultToolbar = "addon-bar";
   var defaultBefore;
@@ -42,15 +43,16 @@ var restorePosition = function(document, button) {
     toolbar = document.getElementById(defaultToolbar);
     currentset = toolbar.getAttribute("currentset").split(",");
     //idx = currentset.indexOf(defaultBefore) || -1;
-    var whatwhat = currentset.indexOf(defaultBefore);
-    if (whatwhat) {
-      idx = whatwhat;
+    var idxBefore = currentset.indexOf(defaultBefore); // I thought this would make it -1 if it isn't there.... awk. awk. awk. awk.
+    if (idxBefore) {
+      idx = idxBefore;
       currentset.splice(idx, 0, button.id);
     } else {
       idx = -1;
       currentset.push(button.id);
     }
     toolbar.setAttribute("currentset", currentset.join(","));
+    toolbar.currentSet = currentset.join(","); //this is ugly, fix if this solves the problem.
     //document.persist(toolbar.id, "currentset"); //welp this isn't helping.
   }
 
@@ -65,7 +67,7 @@ var restorePosition = function(document, button) {
         if (before) {
           toolbar.insertItem(button.id, before);
           toolbar.setAttribute("currentset", toolbar.currentSet);
-          document.persist(toolbar.id, "currentset");
+          //document.persist(toolbar.id, "currentset");
           return; //why is it returning? should it be breaking? I. what. {returning ends the function. so it does make sense.}
         }
       }

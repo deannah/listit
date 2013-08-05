@@ -63,18 +63,20 @@ var setupMenu = function(window) {
 };
 
 var setupIcon = function(window) {
-  var document = window.document;
-  var button = document.createElement("toolbarbutton");
-  button.setAttribute("id", "listitButton");
-  button.setAttribute("command", "viewListitSidebar");
-  button.setAttribute("observes", "viewListitSidebar");
-  button.setAttribute("key", "key_viewListitSidebar");
-  button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
-  button.setAttribute("class", "listit toolbarbutton-1 chromeclass-toolbar-additional");
-  restorePosition(document, button);
+  // maybe this is a more reasonable location to import the icon-manager?
+  // var document = window.document;
+  // var button = document.createElement("toolbarbutton");
+  // button.setAttribute("id", "listitButton");
+  // button.setAttribute("command", "viewListitSidebar");
+  // button.setAttribute("observes", "viewListitSidebar");
+  // button.setAttribute("key", "key_viewListitSidebar");
+  // button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
+  // button.setAttribute("class", "listit toolbarbutton-1 chromeclass-toolbar-additional");
+  // restorePosition(document, button);
+  ListItWM.ListItIM.createButton(window);
 };
 
-var restorePosition = function(document, button) {
+/*var restorePosition = function(document, button) {
   (document.getElementById("navigator-toolbox") || document.getElementById("mail-toolbox")).palette.appendChild(button); // what. what. i don't understand what those toolboxes are. Dunno if selecting one or the other is necessary... [maybe a thing for different ff versions?]
 
   //check which (if any) toolbar the button should be located in:
@@ -131,7 +133,7 @@ var restorePosition = function(document, button) {
     }
   }
 
-};
+};*/
 
 var bindKey = function(keyEl, hotkey) {
   var pieces = hotkey.split('+');
