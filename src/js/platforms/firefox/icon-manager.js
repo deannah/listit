@@ -17,7 +17,51 @@ var createIcon = function(window) {
   button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
   button.setAttribute("class", "listit toolbarbutton-1 chromeclass-toolbar-additional");
   (document.getElementById("navigator-toolbox") || document.getElementById("mail-toolbox")).palette.appendChild(button);
-  restorePosition(document, button);
+  //restorePosition(document, button);
+  addIcon(document, button);
+};
+
+var addIcon = function(document, button) {
+  //check which (if any) toolbar the button should be located in:
+  // when restarting firefox, this will allow the position of the icon to persist:
+  var toolbars = document.querySelectorAll("toolbar");
+  var toolbar, currentset, idx;
+  for (var i = 0; i < toolbars.length; i++) {
+    currentset = toolbars[i].getAttribute("currentset").split(",");
+    idx = currentset.indexOf(button.id);
+    if (idx !== -1) {
+      toolbar = toolbars[i];
+      break;
+    }
+  }
+
+  // if no toolbar was found, just use the default:
+  // should actually be called if reason = enable, but like, you know, whatev.
+  if (!toolbar) {
+    useDefaultPosition(document, button);
+    return; //this will be unnecessary when we do this for the reason. we'll just use some if statements and shit and all will be well. 
+  }
+  
+  // put the button into the toolbar it belongs in. This is a derpy way of doing it if it just used the default, but oh well.
+  if (toolbar) {
+    insertButton(document, button, toolbar);
+  }
+};
+
+var useDefaultPosition = function(document, button) {
+  var defaultToolbar = "addon-bar";
+  var toolbar = document.getElementById(defaultToolbar);
+  var currentset = toolbar.getAttribute("currentset").split(",");
+  currentset.push(button.id);
+  toolbar.setAttribute("currentset", currentset.join(","));
+  toolbar.currentSet = currentset.join(",");
+  toolbar.insertItem(button.id);
+};
+
+var insertButton = function(document, button, toolbar) { // I have no idea why this is using a different method from the use default guy.
+  var itemAfter = document.getElementById(currentset[i+1]);
+  toolbar.insertItem(button.id, before);
+  toolbar.setAttribute("currentset", toolbar.currentSet);
 };
 
 //should probably be called "add icon" because this is the function that adds the icon to one of the toolbars.
