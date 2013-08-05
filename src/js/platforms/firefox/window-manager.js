@@ -24,6 +24,8 @@ var wm = Cc["@mozilla.org/appshell/window-mediator;1"]
     ListIt,
     ListItWM = {};
 
+Cu.import("chrome://listit/content/webapp/js/platforms/firefox/icon-manager.js", ListItWM); //probably wrong way to do this. or wrong place.
+
 var eachWindow = function(fn) {
   var windows = wm.getEnumerator("navigator:browser");
   while (windows.hasMoreElements()) {
@@ -95,7 +97,7 @@ var restorePosition = function(document, button) {
     toolbar = document.getElementById(defaultToolbar);
     currentset = toolbar.getAttribute("currentset").split(",");
     //idx = currentset.indexOf(defaultBefore) || -1;
-    var whatwhat = currentset.indexOf(defaultBefore);
+    var whatwhat = currentset.indexOf(defaultBefore); // I thought this would make it -1 if it isn't there.... awk. awk. awk. awk.
     if (whatwhat) {
       idx = whatwhat;
       currentset.splice(idx, 0, button.id);
@@ -104,7 +106,7 @@ var restorePosition = function(document, button) {
       currentset.push(button.id);
     }
     toolbar.setAttribute("currentset", currentset.join(","));
-    //toolbar.currentSet = currentset.join(","); //this is ugly, fix if this solves the problem.
+    toolbar.currentSet = currentset.join(","); //this is ugly, fix if this solves the problem.
     //document.persist(toolbar.id, "currentset"); //welp this isn't helping.
   }
 
@@ -118,7 +120,7 @@ var restorePosition = function(document, button) {
         var before = document.getElementById(currentset[q]);
         if (before) {
           toolbar.insertItem(button.id, before);
-          //toolbar.setAttribute("currentset", toolbar.currentSet);
+          toolbar.setAttribute("currentset", toolbar.currentSet);
           //toolbar.currentSet
           //document.persist(toolbar.id, "currentset");
           return; //why is it returning? should it be breaking? I. what. {returning ends the function. so it does make sense.}
@@ -219,20 +221,20 @@ ListItWM.teardownBrowser = function(window) {
   });
 };
 
-ListItWM.disable = function(window) {
-  //need to remove the listitButton from the currentset of whichever toolbar it was in 
-  var toolbars = window.document.querySelectorAll("toolbar");
-  for (var i = 0; i < toolbars.length; i++) {
-    var currentset = toolbars[i].getAttribute("currentset").split(",");
-    var idx = currentset.indexOf("listitButton");
-    if (idx !== -1) {
-      currentset.splice(idx, 1);
-      toolbars[i].setAttribute("currentset", currentset.join(","));
-      toolbars[i].currentSet = currentset.join(","); //necessary???
-    }
-    //window.persist(toolbars[i], "currentset"); NO BAD THIS IS BAD DON'T DO THIS. PROBLEMS.
-  }
-};
+// ListItWM.disable = function(window) {
+  // //need to remove the listitButton from the currentset of whichever toolbar it was in 
+  // var toolbars = window.document.querySelectorAll("toolbar");
+  // for (var i = 0; i < toolbars.length; i++) {
+    // var currentset = toolbars[i].getAttribute("currentset").split(",");
+    // var idx = currentset.indexOf("listitButton");
+    // if (idx !== -1) {
+      // currentset.splice(idx, 1);
+      // toolbars[i].setAttribute("currentset", currentset.join(","));
+      // toolbars[i].currentSet = currentset.join(","); //necessary???
+    // }
+    // //window.persist(toolbars[i], "currentset"); NO BAD THIS IS BAD DON'T DO THIS. PROBLEMS.
+  // }
+// };
 
 ListItWM.setup = function(realListIt) {
   ListIt = realListIt;
@@ -252,7 +254,8 @@ ListItWM.teardown = function(reason) {
     }
     ListItWM.teardownBrowser(domWindow);
     if (reason === 4) {
-      ListItWM.disable(domWindow);
+      //ListItWM.disable(domWindow);
+      ListItWM.ListItIM.destroyButton(domWindow);
     }
   });
 };
