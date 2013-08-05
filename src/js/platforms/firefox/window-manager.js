@@ -73,10 +73,10 @@ var setupIcon = function(window) {
 };
 
 var restorePosition = function(document, button) {
-  (document.getElementById("navigator-toolbox") || document.getElementById("mail-toolbox")).palette.appendChild(button);
+  (document.getElementById("navigator-toolbox") || document.getElementById("mail-toolbox")).palette.appendChild(button); // what. what. i don't understand what those toolboxes are. Dunno if selecting one or the other is necessary... [maybe a thing for different ff versions?]
 
   //check which (if any) toolbar the button should be located in:
-  var toolbars = document.querySelectorAll("toolbar"); // I think you can just use jquery? we'll do this for now.
+  var toolbars = document.querySelectorAll("toolbar");
   var toolbar, currentset, idx;
   for (var i = 0; i < toolbars.length; i++) {
     currentset = toolbars[i].getAttribute("currentset").split(",");
@@ -88,6 +88,7 @@ var restorePosition = function(document, button) {
   }
 
   //if the save position wasn't found, use the default one:
+  //this why putting icon in palette doesn't work and why bmreplace guy did "if it exists" and set the default on enabling it.
   var defaultToolbar = "addon-bar";
   var defaultBefore;
   if (!toolbar) {
@@ -112,10 +113,11 @@ var restorePosition = function(document, button) {
     if (idx != -1) { //this is necessary in his, I don't think it is necessary in ours yet... until we implement the default guy...
       for (var q = idx + 1; q <currentset.length; q++) {
         //oh dear lord why the shit is this a for loop oh my god wat wat wat
+        // I still fundamentally don't understand what the shit is happening here.
         var before = document.getElementById(currentset[q]);
         if (before) {
           toolbar.insertItem(button.id, before);
-          return; //why is it returning? should it be breaking? I. what.
+          return; //why is it returning? should it be breaking? I. what. {returning ends the function. so it does make sense.}
         }
       }
     } else {
