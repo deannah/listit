@@ -104,7 +104,7 @@ var restorePosition = function(document, button) {
       currentset.push(button.id);
     }
     toolbar.setAttribute("currentset", currentset.join(","));
-    toolbar.currentSet = currentset.join(","); //this is ugly, fix if this solves the problem.
+    //toolbar.currentSet = currentset.join(","); //this is ugly, fix if this solves the problem.
     //document.persist(toolbar.id, "currentset"); //welp this isn't helping.
   }
 
@@ -118,7 +118,7 @@ var restorePosition = function(document, button) {
         var before = document.getElementById(currentset[q]);
         if (before) {
           toolbar.insertItem(button.id, before);
-          toolbar.setAttribute("currentset", toolbar.currentSet);
+          //toolbar.setAttribute("currentset", toolbar.currentSet);
           //toolbar.currentSet
           //document.persist(toolbar.id, "currentset");
           return; //why is it returning? should it be breaking? I. what. {returning ends the function. so it does make sense.}
@@ -228,9 +228,9 @@ ListItWM.disable = function(window) {
     if (idx !== -1) {
       currentset.splice(idx, 1);
       toolbars[i].setAttribute("currentset", currentset.join(","));
-      toolbars[i].currentSet = currentset.join(",");
+      //toolbars[i].currentSet = currentset.join(","); //necessary???
     }
-    window.persist(toolbars[i], "currentset");
+    //window.persist(toolbars[i], "currentset");
   }
 };
 
