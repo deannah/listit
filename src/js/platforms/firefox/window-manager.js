@@ -81,7 +81,7 @@ var restorePosition = function(document, button) {
   for (var i = 0; i < toolbars.length; i++) {
     currentset = toolbars[i].getAttribute("currentset").split(",");
     idx = currentset.indexOf(button.id);
-    if (idx != -1) { //try changing to !== later to see if it still works.
+    if (idx !== -1) { //try changing to !== later to see if it still works.
       toolbar = toolbars[i];
       break;
     }
@@ -110,7 +110,7 @@ var restorePosition = function(document, button) {
   //put the button into the toolbar it belongs in:
   // when the default happens this is a suuuuper stupid way of doing it but like... oh well.
   if (toolbar) {
-    if (idx != -1) { //this is necessary in his, I don't think it is necessary in ours yet... until we implement the default guy...
+    if (idx !== -1) { //this is necessary in his, I don't think it is necessary in ours yet... until we implement the default guy...
       for (var q = idx + 1; q <currentset.length; q++) {
         //oh dear lord why the shit is this a for loop oh my god wat wat wat
         // I still fundamentally don't understand what the shit is happening here.
