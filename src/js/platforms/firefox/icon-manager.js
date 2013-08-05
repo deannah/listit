@@ -16,8 +16,7 @@ var createIcon = function(window) {
   button.setAttribute("key", "key_viewListitSidebar");
   button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
   button.setAttribute("class", "listit toolbarbutton-1 chromeclass-toolbar-additional");
-  (document.getElementById("navigator-toolbox") || document.getElementById("mail-toolbox")).palette.appendChild(button);
-  //restorePosition(document, button);
+  document.getElementById("navigator-toolbox").palette.appendChild(button);
   addIcon(document, button);
 };
 
