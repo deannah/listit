@@ -228,9 +228,9 @@ ListItWM.disable = function(window) {
     if (idx !== -1) {
       currentset.splice(idx, 1);
       toolbars[i].setAttribute("currentset", currentset.join(","));
-      //toolbars[i].currentSet = currentset.join(","); //necessary???
+      toolbars[i].currentSet = currentset.join(","); //necessary???
     }
-    //window.persist(toolbars[i], "currentset");
+    //window.persist(toolbars[i], "currentset"); NO BAD THIS IS BAD DON'T DO THIS. PROBLEMS.
   }
 };
 
