@@ -64,64 +64,6 @@ var insertButton = function(document, button, toolbar) { // I have no idea why t
   toolbar.setAttribute("currentset", toolbar.currentSet);
 };
 
-//should probably be called "add icon" because this is the function that adds the icon to one of the toolbars.
-var restorePosition = function(document, button) {
-  //check which (if any) toolbar the button should be located in:
-  var toolbars = document.querySelectorAll("toolbar");
-  var toolbar, currentset, idx;
-  for (var i = 0; i < toolbars.length; i++) {
-    currentset = toolbars[i].getAttribute("currentset").split(",");
-    idx = currentset.indexOf(button.id);
-    if (idx !== -1) {
-      toolbar = toolbars[i];
-      break;
-    }
-  }
-
-  //if the save position wasn't found, use the default one:
-  // this code REALLY REALLY REALLY needs to get overhauled because it is a mess.
-  //this why putting icon in palette doesn't work and why bmreplace guy did "if it exists" and set the default on enabling it.
-  var defaultToolbar = "addon-bar";
-  var defaultBefore;
-  if (!toolbar) {
-    toolbar = document.getElementById(defaultToolbar);
-    currentset = toolbar.getAttribute("currentset").split(",");
-    //idx = currentset.indexOf(defaultBefore) || -1;
-    var idxBefore = currentset.indexOf(defaultBefore); // I thought this would make it -1 if it isn't there.... awk. awk. awk. awk.
-    if (idxBefore) {
-      idx = idxBefore;
-      currentset.splice(idx, 0, button.id);
-    } else {
-      idx = -1;
-      currentset.push(button.id);
-    }
-    toolbar.setAttribute("currentset", currentset.join(","));
-    toolbar.currentSet = currentset.join(","); //this is ugly, fix if this solves the problem.
-    //document.persist(toolbar.id, "currentset"); //welp this isn't helping.
-  }
-
-  //put the button into the toolbar it belongs in:
-  // when the default happens this is a suuuuper stupid way of doing it but like... oh well.
-  if (toolbar) {
-    if (idx !== -1) { //this is necessary in his, I don't think it is necessary in ours yet... until we implement the default guy...
-      for (var q = idx + 1; q <currentset.length; q++) {
-        //oh dear lord why the shit is this a for loop oh my god wat wat wat
-        // I still fundamentally don't understand what the shit is happening here.
-        var before = document.getElementById(currentset[q]);
-        if (before) {
-          toolbar.insertItem(button.id, before);
-          toolbar.setAttribute("currentset", toolbar.currentSet);
-          //document.persist(toolbar.id, "currentset");
-          return; //why is it returning? should it be breaking? I. what. {returning ends the function. so it does make sense.}
-        }
-      }
-    } else {
-      toolbar.insertItem(button.id);
-    }
-  }
-
-};
-
 var removeIcon = function(window) {
   //need to remove the listitButton from the currentset of whichever toolbar it was in 
   var toolbars = window.document.querySelectorAll("toolbar");
