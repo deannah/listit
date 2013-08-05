@@ -104,7 +104,7 @@ var restorePosition = function(document, button) {
       currentset.push(button.id);
     }
     toolbar.setAttribute("currentset", currentset.join(","));
-
+    //document.persist(toolbar.id, "currentset"); //welp this isn't helping.
   }
 
   //put the button into the toolbar it belongs in:
@@ -117,6 +117,8 @@ var restorePosition = function(document, button) {
         var before = document.getElementById(currentset[q]);
         if (before) {
           toolbar.insertItem(button.id, before);
+          toolbar.setAttribute("currentset", toolbar.currentSet);
+          document.persist(toolbar.id, "currentset");
           return; //why is it returning? should it be breaking? I. what. {returning ends the function. so it does make sense.}
         }
       }
@@ -218,12 +220,12 @@ ListItWM.teardownBrowser = function(window) {
 ListItWM.disable = function(window) {
   //need to remove the listitButton from the currentset of whichever toolbar it was in 
   var toolbars = window.document.querySelectorAll("toolbar");
-  for (var womp = 0; womp < toolbars.length; womp++) {
-    var currentset = toolbars[womp].getAttribute("currentset").split(",");
+  for (var i = 0; i < toolbars.length; i++) {
+    var currentset = toolbars[i].getAttribute("currentset").split(",");
     var idx = currentset.indexOf("listitButton");
-    if (idx != -1) {
+    if (idx !== -1) {
       currentset.splice(idx, 1);
-      toolbars[womp].setAttribute("currentset", currentset.join(","));
+      toolbars[i].setAttribute("currentset", currentset.join(","));
     }
   }
 };
@@ -245,7 +247,7 @@ ListItWM.teardown = function(reason) {
       domWindow.toggleSidebar();
     }
     ListItWM.teardownBrowser(domWindow);
-    if (reason == 4) {
+    if (reason === 4) {
       ListItWM.disable(domWindow);
     }
   });
