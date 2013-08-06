@@ -60,6 +60,7 @@ var useDefaultPosition = function(document, button) {
   toolbar.setAttribute("currentset", currentset.join(","));
   toolbar.currentSet = currentset.join(",");
   toolbar.insertItem(button.id);
+  toolbar.collapsed = false;
 };
 
 //also why the shit is this its own function if it needs literally every variable from the previous thing.
