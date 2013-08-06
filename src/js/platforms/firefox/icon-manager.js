@@ -7,7 +7,7 @@ var EXPORTED_SYMBOLS = ["ListItIM"];
 var ListItIM = {};
 
 // creates the dom element for the toolbar button, and the basis for adding it to a toolbar.
-var createIcon = function(window, reason) {
+var createIcon = function(window, enabling) {
   var document = window.document;
   var button = document.createElement("toolbarbutton");
   button.setAttribute("id", "listitButton");
@@ -17,7 +17,7 @@ var createIcon = function(window, reason) {
   button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
   button.setAttribute("class", "listit toolbarbutton-1 chromeclass-toolbar-additional");
   document.getElementById("navigator-toolbox").palette.appendChild(button);
-  if (reason === 3) { // Enabling extension, should use default position.
+  if (enabling) { // Enabling extension, should use default position.
     useDefaultPosition(document, button);
   } else {
     addIcon(document, button);
@@ -83,8 +83,8 @@ var removeIcon = function(window) {
   }
 };
 
-ListItIM.createButton = function(window, reason) { // I don't know if this level of functionwhatnotexportationshit is actually necessary. Womp womp womp.
-  createIcon(window, reason);
+ListItIM.createButton = function(window, enabling) { // I don't know if this level of functionwhatnotexportationshit is actually necessary. Womp womp womp.
+  createIcon(window, enabling);
 };
 
 ListItIM.destroyButton = function(window) {

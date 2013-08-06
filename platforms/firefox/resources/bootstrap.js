@@ -16,16 +16,16 @@ var ListItManager = {
   _inited: false,
   ready: false,
   _timer: Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer),
-  _startCb: function(reason) {
+  _startCb: function() {
     Cu.import("chrome://listit/content/background.jsm", ListItManager);
     Cu.import("chrome://listit/content/webapp/js/platforms/firefox/window-manager.js", ListItManager);
     if (ListItManager.ListIt.status === "ready") {
       ListItManager.ready = true;
-      ListItManager.ListItWM.setup(ListItManager.ListIt, reason);
+      ListItManager.ListItWM.setup(ListItManager.ListIt, ListItManager.enabling);
     } else {
       ListItManager.ListIt.lvent.on('status:ready', function() {
         ListItManager.ready = true;
-        ListItManager.ListItWM.setup(ListItManager.ListIt, reason);
+        ListItManager.ListItWM.setup(ListItManager.ListIt, ListItManager.enabling);
       });
     }
   },
@@ -38,7 +38,7 @@ var ListItManager = {
       var windows = wm.getEnumerator("navigator:browser");
       if (windows.hasMoreElements()) {
         ListItManager._timer.initWithCallback(
-          ListItManager._startCb(reason), 10, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+          ListItManager._startCb, 10, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
       } else {
         var launchListener = {
           onOpenWindow: function(xulWindow) {
@@ -48,7 +48,7 @@ var ListItManager = {
             domWindow.addEventListener("load", function listener() {
               domWindow.removeEventListener("load", listener, false);
               ListItManager._timer.initWithCallback(
-                ListItManager._startCb(reason), 10, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+                ListItManager._startCb, 10, Components.interfaces.nsITimer.TYPE_ONE_SHOT);
             });
           },
           onCloseWindow: function(xulWindow) {},
@@ -79,7 +79,10 @@ var ListItManager = {
 };
 
 function startup(data, reason) {
-  ListItManager.start(reason);
+  if (reason === ADDON_ENABLE) {
+    ListItManager.enabling = true;
+  }
+  ListItManager.start();
 }
 
 function shutdown(data, reason) {
