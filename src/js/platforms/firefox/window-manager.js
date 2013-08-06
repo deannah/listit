@@ -60,9 +60,9 @@ var setupMenu = function(window) {
   menu.appendChild(menuitem);
 };
 
-var setupIcon = function(window) {
+var setupIcon = function(window, reason) {
   Cu.import("chrome://listit/content/webapp/js/platforms/firefox/icon-manager.js", ListItWM);
-  ListItWM.ListItIM.createButton(window);
+  ListItWM.ListItIM.createButton(window, reason);
 };
 
 var bindKey = function(keyEl, hotkey) {
@@ -140,10 +140,10 @@ var windowListener = {
 };
 
 
-ListItWM.setupBrowser = function(window) {
+ListItWM.setupBrowser = function(window, reason) {
   setupBroadcaster(window);
   setupMenu(window);
-  setupIcon(window);
+  setupIcon(window, reason);
   setupBrowserHotkey(window, ListIt.preferences.get('openHotkey'));
 };
 
@@ -153,10 +153,10 @@ ListItWM.teardownBrowser = function(window) {
   });
 };
 
-ListItWM.setup = function(realListIt) {
+ListItWM.setup = function(realListIt, reason) {
   ListIt = realListIt;
   eachWindow(function(domWindow) {
-    ListItWM.setupBrowser(domWindow);
+    ListItWM.setupBrowser(domWindow, reason);
   });
   setupPreferenceListener();
   wm.addListener(windowListener);

@@ -7,7 +7,7 @@ var EXPORTED_SYMBOLS = ["ListItIM"];
 var ListItIM = {};
 
 // creates the dom element for the toolbar button, and the basis for adding it to a toolbar.
-var createIcon = function(window) {
+var createIcon = function(window, reason) {
   var document = window.document;
   var button = document.createElement("toolbarbutton");
   button.setAttribute("id", "listitButton");
@@ -17,7 +17,11 @@ var createIcon = function(window) {
   button.setAttribute("image", "chrome://listit/content/webapp/img/icon16.png");
   button.setAttribute("class", "listit toolbarbutton-1 chromeclass-toolbar-additional");
   document.getElementById("navigator-toolbox").palette.appendChild(button);
-  addIcon(document, button);
+  if (reason === 3) { // Enabling extension, should use default position.
+    useDefaultPosition(document, button);
+  } else {
+    addIcon(document, button);
+  }
 };
 
 var addIcon = function(document, button) {
@@ -34,12 +38,12 @@ var addIcon = function(document, button) {
     }
   }
 
-  // if no toolbar was found, just use the default:
-  // should actually be called if reason = enable, but like, you know, whatev.
-  if (!toolbar) {
-    useDefaultPosition(document, button);
-    return; //this will be unnecessary when we do this for the reason. we'll just use some if statements and shit and all will be well. 
-  }
+  // // if no toolbar was found, just use the default:
+  // // should actually be called if reason = enable, but like, you know, whatev.
+  // if (!toolbar) {
+    // useDefaultPosition(document, button);
+    // return; //this will be unnecessary when we do this for the reason. we'll just use some if statements and shit and all will be well. 
+  // }
   
   // put the button into the toolbar it belongs in. This is a derpy way of doing it if it just used the default, but oh well.
   if (toolbar) {
@@ -47,6 +51,7 @@ var addIcon = function(document, button) {
   }
 };
 
+// if extension is being first enabled, add the icon to the default position.
 var useDefaultPosition = function(document, button) {
   var defaultToolbar = "addon-bar";
   var toolbar = document.getElementById(defaultToolbar);
@@ -78,8 +83,8 @@ var removeIcon = function(window) {
   }
 };
 
-ListItIM.createButton = function(window) { // I don't know if this level of functionwhatnotexportationshit is actually necessary. Womp womp womp.
-  createIcon(window);
+ListItIM.createButton = function(window, reason) { // I don't know if this level of functionwhatnotexportationshit is actually necessary. Womp womp womp.
+  createIcon(window, reason);
 };
 
 ListItIM.destroyButton = function(window) {
