@@ -60,7 +60,7 @@ var setupMenu = function(window) {
   menu.appendChild(menuitem);
 };
 
-var setupIcon = function(window, reason) {
+var setupIcon = function(window, enabling) {
   Cu.import("chrome://listit/content/webapp/js/platforms/firefox/icon-manager.js", ListItWM);
   ListItWM.ListItIM.createButton(window, enabling);
 };
