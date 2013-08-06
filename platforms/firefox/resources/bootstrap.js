@@ -64,8 +64,6 @@ var ListItManager = {
         ListItManager._timer.cancel();
         if (ListItManager.ready) {
           ListItManager.ListItWM.teardown(reason);
-          //if (reason == ADDON_DISABLE)
-          //  ListItManager.ListItWM.disable();
         }
         ListItManager.ready = false;
         ListItManager._inited = false;
