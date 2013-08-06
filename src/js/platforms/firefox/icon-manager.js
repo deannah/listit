@@ -47,7 +47,7 @@ var addIcon = function(document, button) {
   
   // put the button into the toolbar it belongs in. This is a derpy way of doing it if it just used the default, but oh well.
   if (toolbar) {
-    insertButton(document, button, toolbar, currentset);
+    insertButton(document, button, toolbar, currentset, idx);
   }
 };
 
@@ -62,8 +62,9 @@ var useDefaultPosition = function(document, button) {
   toolbar.insertItem(button.id);
 };
 
-var insertButton = function(document, button, toolbar, currentset) { // I have no idea why this is using a different method from the use default guy.
-  var itemAfter = document.getElementById(currentset[i+1]);
+//also why the shit is this its own function if it needs literally every variable from the previous thing.
+var insertButton = function(document, button, toolbar, currentset, idx) { // I have no idea why this is using a different method from the use default guy.
+  var itemAfter = document.getElementById(currentset[idx+1]);
   toolbar.insertItem(button.id, itemAfter);
   toolbar.setAttribute("currentset", toolbar.currentSet);
 };
