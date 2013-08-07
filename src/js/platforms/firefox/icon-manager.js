@@ -44,8 +44,8 @@ var addIcon = function(document, button) {
     var itemAfter = document.getElementById(currentset[idx+1]);
     toolbar.insertItem(button.id, itemAfter);
     // toolbar.setAttribute("currentset", toolbar.currentSet);
-    currentset.splice(idx, 0, button.id);
-    toolbar.setAttribute("currentset", currentset.join(","));
+    //currentset.splice(idx, 0, button.id);
+    //toolbar.setAttribute("currentset", currentset.join(","));
   }
 };
 
@@ -59,6 +59,7 @@ var useDefaultPosition = function(document, button) {
   currentset.push(button.id);
   toolbar.setAttribute("currentset", currentset.join(","));
   toolbar.currentSet = currentset.join(",");
+  document.persist(defaultToolbar, "currentset");
   toolbar.collapsed = false;
 };
 
@@ -73,6 +74,7 @@ var removeIcon = function(window) {
       toolbars[i].setAttribute("currentset", currentset.join(","));
       toolbars[i].currentSet = currentset.join(","); //necessary???
       // in bug free code we could break/return/whatever here. but for now I want it to remove the icon from every toolbar just in case.
+      document.persist(toolbars[i].id, "currentset");
     }
   }
 };
