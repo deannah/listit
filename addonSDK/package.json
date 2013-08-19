@@ -1,0 +1,9 @@
+{
+  "name": "testaddon",
+  "fullName": "TestAddon",
+  "id": "jid1-lrn07igZtisIgg",
+  "description": "a basic add-on for testing purposes",
+  "author": "Deanna Heer",
+  "license": "MPL 2.0",
+  "version": "0.1"
+}
