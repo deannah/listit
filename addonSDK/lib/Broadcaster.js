@@ -1,12 +1,8 @@
 //sets up a broadcaster which is how the sidebar is managed.
 
 exports.setupBroadcaster = function(options) {
- 
-  var { Cc, Cu, Ci } = require('chrome');
-  var WindowMediator = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
 
-  var window = WindowMediator.getMostRecentWindow("navigator:browser");
-  var document = window.document;
+  var document = require("Window").get().document;
 
   var id = options.id || "defaultID";
   var label = options.label || "defaultLabel";
