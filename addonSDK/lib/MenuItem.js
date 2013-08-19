@@ -1,6 +1,6 @@
 // created by Deanna Heer
 
-exports.setupMenuitem = function(options) {
+exports.setup = function(options) {
 
   var document = require("Window").get().document;
 

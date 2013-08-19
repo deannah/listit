@@ -1,6 +1,6 @@
 //sets up a broadcaster which is how the sidebar is managed.
 
-exports.setupBroadcaster = function(options) {
+exports.setup = function(options) {
 
   var document = require("Window").get().document;
 

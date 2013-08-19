@@ -11,9 +11,9 @@ exports.setupUI = function() { //I assume it will need options... maybe not.
   var sidebarid = "testSidebar";
   var testclass = "listitClass";
 
-  ui.sidebar = require("Sidebar").createSidebar();
+  ui.sidebar = require("Sidebar").create();
 
-  ui.broadcasterid = require("Broadcaster").setupBroadcaster({
+  ui.broadcasterid = require("Broadcaster").setup({
     id: sidebarid,
     label: "List.it",
     sbclass: testclass,
@@ -21,7 +21,7 @@ exports.setupUI = function() { //I assume it will need options... maybe not.
     sidebartitle: "List.it Sidebar"
     });
     
-  ui.menuitem = require("MenuItem").setupMenuitem({
+  ui.menuitem = require("MenuItem").setup({
     miclass: testclass,
     observes: ui.broadcasterid
   });

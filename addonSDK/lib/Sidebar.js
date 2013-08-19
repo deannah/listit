@@ -1,7 +1,7 @@
 // created by Deanna Heer
 // except like it basically just copies the code Steven did which is the standard, but oh well.
 
-exports.createSidebar = function() {
+exports.create = function() {
 
   var sidebar = {};
 
