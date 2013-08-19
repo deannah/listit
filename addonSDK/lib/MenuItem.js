@@ -10,13 +10,11 @@ exports.setupMenuitem = function(options) {
 
   var miclass = options.miclass || "defaultClass";
   var observes = options.observes;
-  var key = document.createElement('key');
-  key.setAttribute("keytext", "Control+Shift+X");
 
   var menuitem = document.createElement('menuitem');
   menuitem.setAttribute("class", miclass);
   menuitem.setAttribute("observes", observes);
-  menuitem.setAttribute("key", key);
+  // TODO: find a way to make it list the keytext in the menu.
 
   var menu = document.getElementById('viewSidebarMenu');
   menu.appendChild(menuitem);
